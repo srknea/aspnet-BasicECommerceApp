@@ -1,4 +1,6 @@
-﻿using BasicECommerceApp.Persistance.Contexts;
+﻿using BasicECommerceApp.Application.Repositories.Product;
+using BasicECommerceApp.Persistance.Contexts;
+using BasicECommerceApp.Persistance.Repositories.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,7 +16,8 @@ namespace BasicECommerceApp.Persistance
     {
         public static void AddPersistanceServices(this IServiceCollection services)
         {
-
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
+            services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         }
     }
 }
