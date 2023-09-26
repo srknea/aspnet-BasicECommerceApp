@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.Repositories.Product
 {
-    public interface IProductReadRepository : IReadRepository<Domain.Entities.Product>
+    public interface IProductReadRepository : IGenericReadRepository<Domain.Entities.Product>
     {
     }
 }

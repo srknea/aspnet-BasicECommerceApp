@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BasicECommerceApp.Persistence.Repositories
 {
-    public class WriteRepository<T> : IWriteRepository<T> where T : BaseEntity
+    public class GenericWriteRepository<T> : IGenericWriteRepository<T> where T : BaseEntity
     {
         readonly private BasicECommerceAppDbContext _context;
-        public WriteRepository(BasicECommerceAppDbContext context)
+        public GenericWriteRepository(BasicECommerceAppDbContext context)
         {
             _context = context;
         }

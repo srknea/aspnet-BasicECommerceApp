@@ -22,6 +22,7 @@ builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
 
 builder.Services.AddPersistanceServices();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

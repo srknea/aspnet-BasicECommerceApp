@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace BasicECommerceApp.Persistence.Repositories
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
+    public class GenericReadRepository<T> : IGenericReadRepository<T> where T : BaseEntity
     {
         private readonly BasicECommerceAppDbContext _context;
-        public ReadRepository(BasicECommerceAppDbContext context)
+        public GenericReadRepository(BasicECommerceAppDbContext context)
         {
             _context = context;
         }
