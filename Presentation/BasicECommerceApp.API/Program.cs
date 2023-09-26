@@ -1,4 +1,8 @@
 using BasicECommerceApp.Persistance;
+using BasicECommerceApp.Persistance.Contexts;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,14 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
+{
+    x.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"), option =>
+    {
+        option.MigrationsAssembly(Assembly.GetAssembly(typeof(BasicECommerceAppDbContext)).GetName().Name);
+    });
+});
 
 builder.Services.AddPersistanceServices();
 
