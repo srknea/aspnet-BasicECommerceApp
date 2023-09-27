@@ -1,6 +1,8 @@
 using BasicECommerceApp.Application;
+using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
@@ -8,7 +10,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>());
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
