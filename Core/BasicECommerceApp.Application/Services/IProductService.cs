@@ -4,6 +4,6 @@ namespace BasicECommerceApp.Application.Services
 {
     public interface IProductService : IGenericService<Product>
     {
-        Task<IEnumerable<Product>> GetAllAsync();
+        //Task<IEnumerable<Product>> GetAllAsync();
     }
 }

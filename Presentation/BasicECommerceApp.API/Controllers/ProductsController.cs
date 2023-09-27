@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
+﻿using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
 using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
@@ -29,6 +30,14 @@ namespace BasicECommerceApp.API.Controllers
         {
             GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
             
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] CreateProductCommandRequest createProductCommandRequest)
+        {
+            CreateProductCommandResponse response = await _mediator.Send(createProductCommandRequest);
+
             return Ok(response);
         }
     }
