@@ -1,8 +1,10 @@
-﻿using BasicECommerceApp.Application.Repositories;
+﻿using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
+using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Domain.Entities;
 using BasicECommerceApp.Persistance.Repositories.Product;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,19 +15,21 @@ namespace BasicECommerceApp.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        readonly IMediator _mediator;
         readonly private IProductService _productService;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService, IMediator mediator)
         {
             _productService = productService;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
-            var products = await _productService.GetAllAsync();
-
-            return Ok(products);
+            GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
+            
+            return Ok(response);
         }
     }
 }

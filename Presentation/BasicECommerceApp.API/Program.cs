@@ -1,3 +1,4 @@
+using BasicECommerceApp.Application;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
 });
 
 builder.Services.AddPersistanceServices();
-
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
