@@ -1,6 +1,7 @@
 using BasicECommerceApp.API.Filters;
 using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
+using BasicECommerceApp.Application.Configurations.Auth;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Domain.Entities.Auth;
 using BasicECommerceApp.Persistance;
@@ -40,6 +41,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(Opt =>
     Opt.Password.RequireNonAlphanumeric = false; // *? gibi karakterlerin kullanýmýný zorunlu tutma... (Normalde default olarak zorunludur)
 }).AddEntityFrameworkStores<BasicECommerceAppDbContext>().AddDefaultTokenProviders();
 
+builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOption"));
 
 builder.Services.AddPersistanceServices();
 builder.Services.AddApplicationServices();
