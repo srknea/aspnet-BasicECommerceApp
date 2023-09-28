@@ -3,6 +3,7 @@ using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
 using BasicECommerceApp.Application.Configurations.Auth;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Application.Services.Auth;
 using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities.Auth;
 using BasicECommerceApp.Persistance;
@@ -30,6 +31,11 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
