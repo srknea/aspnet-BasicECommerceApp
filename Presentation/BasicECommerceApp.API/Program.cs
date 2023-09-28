@@ -42,6 +42,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(Opt =>
 }).AddEntityFrameworkStores<BasicECommerceAppDbContext>().AddDefaultTokenProviders();
 
 builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOption"));
+builder.Services.Configure<Client>(builder.Configuration.GetSection("Clients"));
 
 builder.Services.AddPersistanceServices();
 builder.Services.AddApplicationServices();
