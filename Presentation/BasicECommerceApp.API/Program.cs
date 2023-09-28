@@ -2,9 +2,11 @@ using BasicECommerceApp.API.Filters;
 using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Domain.Entities.Auth;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,6 +33,13 @@ builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(BasicECommerceAppDbContext)).GetName().Name);
     });
 });
+
+builder.Services.AddIdentity<AppUser, AppRole>(Opt =>
+{
+    Opt.User.RequireUniqueEmail = true; // Email adresi unique olmalý
+    Opt.Password.RequireNonAlphanumeric = false; // *? gibi karakterlerin kullanýmýný zorunlu tutma... (Normalde default olarak zorunludur)
+}).AddEntityFrameworkStores<BasicECommerceAppDbContext>().AddDefaultTokenProviders();
+
 
 builder.Services.AddPersistanceServices();
 builder.Services.AddApplicationServices();
