@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+﻿using BasicECommerceApp.Application.DTOs;
+using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
 using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Product;
@@ -14,14 +15,12 @@ namespace BasicECommerceApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : CustomBaseController
     {
         readonly IMediator _mediator;
-        readonly private IProductService _productService;
 
-        public ProductsController(IProductService productService, IMediator mediator)
+        public ProductsController(IMediator mediator)
         {
-            _productService = productService;
             _mediator = mediator;
         }
 
@@ -29,8 +28,8 @@ namespace BasicECommerceApp.API.Controllers
         public async Task<IActionResult> GetById([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
-            
-            return Ok(response);
+
+            return CreateActionResult(CustomResponseDto<GetByIdProductQueryResponse>.Success(200, response));
         }
 
         [HttpPost]
@@ -38,7 +37,8 @@ namespace BasicECommerceApp.API.Controllers
         {
             CreateProductCommandResponse response = await _mediator.Send(createProductCommandRequest);
 
-            return Ok(response);
+            return CreateActionResult(CustomResponseDto<CreateProductCommandResponse>.Success(201, response));
+            // 201 : Oluşturuldu anlamında kullanılır. İşlem başarılı ise 201 döndürülebilir.
         }
     }
 }

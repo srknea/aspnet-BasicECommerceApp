@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Application.Repositories.Product;
+﻿using BasicECommerceApp.Application.DTOs;
+using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
 using MediatR;
 using System;
