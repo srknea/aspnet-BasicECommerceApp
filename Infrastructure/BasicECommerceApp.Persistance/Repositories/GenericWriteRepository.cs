@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BasicECommerceApp.Persistence.Repositories
 {
-    public class GenericWriteRepository<T> : IGenericWriteRepository<T> where T : BaseEntity
+    public class GenericWriteRepository<T> : IGenericWriteRepository<T> where T : class
     {
         readonly private BasicECommerceAppDbContext _context;
+        private readonly DbSet<T> Table;
         public GenericWriteRepository(BasicECommerceAppDbContext context)
         {
             _context = context;
+            Table = context.Set<T>();
         }
-
-        public DbSet<T> Table => _context.Set<T>();
 
         public async Task AddAsync(T entity)
         {
@@ -40,14 +40,5 @@ namespace BasicECommerceApp.Persistence.Repositories
         {
             Table.Update(entity);
         }
-
-        /*
-        public async Task<int> SaveAsync()
-        { 
-            return await _context.SaveChangesAsync();
-        }
-        */
-        public async Task<int> SaveAsync()
-           => await _context.SaveChangesAsync();
     }
 }

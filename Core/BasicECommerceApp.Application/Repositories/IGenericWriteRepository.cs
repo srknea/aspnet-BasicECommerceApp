@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.Repositories
 {
-    public interface IGenericWriteRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public interface IGenericWriteRepository<T> : IGenericRepository<T> where T : class
     {
         Task AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
@@ -16,6 +16,6 @@ namespace BasicECommerceApp.Application.Repositories
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
 
-        Task<int> SaveAsync();
+        //Task<int> SaveAsync();
     }
 }

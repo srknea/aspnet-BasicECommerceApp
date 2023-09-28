@@ -3,9 +3,11 @@ using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
 using BasicECommerceApp.Application.Configurations.Auth;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities.Auth;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
+using BasicECommerceApp.Persistance.UnitOfWork;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
 {

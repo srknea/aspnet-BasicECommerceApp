@@ -1,5 +1,6 @@
 ﻿using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Services;
+using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -10,23 +11,27 @@ namespace BasicECommerceApp.Persistance.Services
     {
         private readonly IGenericWriteRepository<T> _writeRepository;
         private readonly IGenericReadRepository<T> _readRepository;
-        public GenericService(IGenericReadRepository<T> readRepository, IGenericWriteRepository<T> writeRepository)
+
+        private readonly IUnitOfWork _unitOfWork;
+
+        public GenericService(IGenericReadRepository<T> readRepository, IGenericWriteRepository<T> writeRepository, IUnitOfWork unitOfWork)
         {
             _readRepository = readRepository;
             _writeRepository = writeRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<T> AddAsync(T entity)
         {
             await _writeRepository.AddAsync(entity);
-            await _writeRepository.SaveAsync();
+            await _unitOfWork.CommitAsync();
             return entity;
         }
 
         public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
         {
             await _writeRepository.AddRangeAsync(entities);
-            await _writeRepository.SaveAsync();
+            await _unitOfWork.CommitAsync();
             return entities;
         }
 
@@ -50,19 +55,19 @@ namespace BasicECommerceApp.Persistance.Services
         public async Task RemoveAsync(T entity)
         {
             _writeRepository.Remove(entity);
-            await _writeRepository.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             _writeRepository.RemoveRange(entities);
-            await _writeRepository.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
             _writeRepository.Update(entity);
-            await _writeRepository.SaveAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)

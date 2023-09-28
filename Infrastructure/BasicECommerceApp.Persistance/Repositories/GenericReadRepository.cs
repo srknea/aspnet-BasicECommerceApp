@@ -9,12 +9,12 @@ namespace BasicECommerceApp.Persistence.Repositories
     public class GenericReadRepository<T> : IGenericReadRepository<T> where T : BaseEntity
     {
         private readonly BasicECommerceAppDbContext _context;
+        private readonly DbSet<T> Table;
         public GenericReadRepository(BasicECommerceAppDbContext context)
         {
             _context = context;
+            Table = context.Set<T>();
         }
-
-        public DbSet<T> Table => _context.Set<T>();
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {

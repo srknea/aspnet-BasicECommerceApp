@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.Repositories
 {
-    public interface IGenericReadRepository<T> : IGenericRepository<T> where T : BaseEntity
+    public interface IGenericReadRepository<T> : IGenericRepository<T> where T : class
     {
         Task<T> GetByIdAsync(string id);
         IQueryable<T> GetAll();

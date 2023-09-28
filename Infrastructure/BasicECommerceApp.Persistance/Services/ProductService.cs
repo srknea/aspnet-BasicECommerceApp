@@ -1,6 +1,7 @@
 ﻿using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
+using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities;
 using BasicECommerceApp.Persistance.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +16,8 @@ namespace BasicECommerceApp.Persistence.Services
 {
     public class ProductService : GenericService<Product>, IProductService
     {
-        public ProductService(IGenericReadRepository<Product> readRepository, IGenericWriteRepository<Product> writeRepository) : base(readRepository, writeRepository)
+        public ProductService(IGenericReadRepository<Product> readRepository, IGenericWriteRepository<Product> writeRepository, IUnitOfWork unitOfWork) : base(readRepository, writeRepository, unitOfWork)
         {
-        }   
+        }
     }
 }

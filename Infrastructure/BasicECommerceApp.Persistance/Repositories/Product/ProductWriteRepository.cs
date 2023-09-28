@@ -1,6 +1,7 @@
 ﻿using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Persistance.Contexts;
 using BasicECommerceApp.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace BasicECommerceApp.Persistance.Repositories.Product
     {
         public ProductWriteRepository(BasicECommerceAppDbContext context) : base(context)
         {
-        }
+        }   
     }
 }

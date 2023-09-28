@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.Repositories
 {
-    public interface IGenericRepository<T> where T : BaseEntity
+    public interface IGenericRepository<T> where T : class
     {
-        DbSet<T> Table { get; }
+        //DbSet<T> Table { get; }
     }
 }
