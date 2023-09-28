@@ -3,7 +3,7 @@ using BasicECommerceApp.Application.Services.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BasicECommerceApp.API.Controllers
+namespace BasicECommerceApp.API.Controllers.Auth
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
