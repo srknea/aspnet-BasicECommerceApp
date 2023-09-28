@@ -1,9 +1,11 @@
+using BasicECommerceApp.API.Filters;
 using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
@@ -11,7 +13,13 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>());
+builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()))
+    .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateProductCommandValidator>());
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
