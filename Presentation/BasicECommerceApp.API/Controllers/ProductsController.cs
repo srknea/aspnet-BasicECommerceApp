@@ -1,4 +1,5 @@
 ﻿using BasicECommerceApp.Application.DTOs;
+using BasicECommerceApp.Application.Exceptions;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
 using BasicECommerceApp.Application.Repositories;
