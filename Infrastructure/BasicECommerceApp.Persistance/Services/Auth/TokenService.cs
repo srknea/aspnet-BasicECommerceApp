@@ -42,6 +42,9 @@ namespace BasicECommerceApp.Persistance.Services.Auth
         // Üyelik sistemi gerektiren bir token oluşturmak istediğimizde PAYLOAD'ı dolduracak
         private async Task<IEnumerable<Claim>> GetClaims(AppUser userApp, List<string> audiences)
         {
+            var userRoles = await _userManager.GetRolesAsync(userApp); // Kullanıcı rollerini çekiyoruz. Örn: admin, manager
+            // List<string> <-------> ["admin","manager"]
+
             var userList = new List<Claim> {
             new Claim(ClaimTypes.NameIdentifier,userApp.Id),
             new Claim(JwtRegisteredClaimNames.Email, userApp.Email),
@@ -50,6 +53,8 @@ namespace BasicECommerceApp.Persistance.Services.Auth
             };
 
             userList.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
+
+            userList.AddRange(userRoles.Select(x => new Claim(ClaimTypes.Role, x))); // Kullanıcı rollerini ClaimTypes.Role ile Payload'a ekliyoruz
 
             return userList;
         }
@@ -78,9 +83,9 @@ namespace BasicECommerceApp.Persistance.Services.Auth
             JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
                 issuer: _tokenOption.Issuer,
                 expires: accessTokenExpiration,
-                 notBefore: DateTime.Now,
-                 claims: await GetClaims(userApp, _tokenOption.Audience),
-                 signingCredentials: signingCredentials);
+                notBefore: DateTime.Now,
+                claims: await GetClaims(userApp, _tokenOption.Audience),
+                signingCredentials: signingCredentials);
 
             var handler = new JwtSecurityTokenHandler(); // Token'ı oluşturacak olan nesne
 
