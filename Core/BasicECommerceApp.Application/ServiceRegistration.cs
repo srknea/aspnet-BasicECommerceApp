@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using BasicECommerceApp.Application.Repositories.Product;
+using BasicECommerceApp.Application.Repositories;
+using BasicECommerceApp.Application.Services;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,9 +13,9 @@ namespace BasicECommerceApp.Application
 {
     public static class ServiceRegistration
     {
-        public static void AddApplicationServices(this IServiceCollection collection)
+        public static void AddApplicationServices(this IServiceCollection services)
         {
-            collection.AddMediatR(typeof(ServiceRegistration));
+            services.AddMediatR(typeof(ServiceRegistration));
         }
     }
 }

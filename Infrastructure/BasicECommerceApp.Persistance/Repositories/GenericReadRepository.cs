@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace BasicECommerceApp.Persistence.Repositories
 {
-    public class GenericReadRepository<T> : IGenericReadRepository<T> where T : BaseEntity
+    public class GenericReadRepository<T> : IGenericReadRepository<T> where T : class
     {
         private readonly BasicECommerceAppDbContext _context;
         private readonly DbSet<T> Table;

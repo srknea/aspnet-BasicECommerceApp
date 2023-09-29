@@ -74,8 +74,8 @@ namespace BasicECommerceApp.Persistance.Services.Auth
         // Token oluşturmak için kullanacağımız metot
         public async Task<TokenDto> CreateTokenAsync(AppUser userApp)
         {
-            var accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.AccessTokenExpiration); // Token'ın ömrü
-            var refreshTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.RefreshTokenExpiration);
+            var accessTokenExpiration = DateTime.UtcNow.AddMinutes(_tokenOption.AccessTokenExpiration); // Token'ın ömrü
+            var refreshTokenExpiration = DateTime.UtcNow.AddMinutes(_tokenOption.RefreshTokenExpiration);
             var securityKey = SignService.GetSymmetricSecurityKey(_tokenOption.SecurityKey); // Token'ı imzalayacak olan key
 
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature); // Token'ı imzalayacak olan algoritma. HEADER kısmında şu şekilde belirtilecek ---> alg:HS256
@@ -83,7 +83,7 @@ namespace BasicECommerceApp.Persistance.Services.Auth
             JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
                 issuer: _tokenOption.Issuer,
                 expires: accessTokenExpiration,
-                notBefore: DateTime.Now,
+                notBefore: DateTime.UtcNow,
                 claims: await GetClaims(userApp, _tokenOption.Audience),
                 signingCredentials: signingCredentials);
 
@@ -105,7 +105,7 @@ namespace BasicECommerceApp.Persistance.Services.Auth
         // Üyelik sistemi gerektirmeyen Client'lar için token oluşturacağımız method
         public ClientTokenDto CreateTokenByClient(Client client)
         {
-            var accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.AccessTokenExpiration);
+            var accessTokenExpiration = DateTime.UtcNow.AddMinutes(_tokenOption.AccessTokenExpiration);
 
             var securityKey = SignService.GetSymmetricSecurityKey(_tokenOption.SecurityKey);
 
@@ -114,7 +114,7 @@ namespace BasicECommerceApp.Persistance.Services.Auth
             JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
                 issuer: _tokenOption.Issuer,
                 expires: accessTokenExpiration,
-                 notBefore: DateTime.Now,
+                 notBefore: DateTime.UtcNow,
                  claims: GetClaimsByClient(client),
                  signingCredentials: signingCredentials);
 

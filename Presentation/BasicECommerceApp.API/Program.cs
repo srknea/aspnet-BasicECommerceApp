@@ -3,20 +3,30 @@ using BasicECommerceApp.API.Middlewares;
 using BasicECommerceApp.Application;
 using BasicECommerceApp.Application.Configurations.Auth;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Application.Mapping;
+using BasicECommerceApp.Application.Repositories.Product;
+using BasicECommerceApp.Application.Repositories;
+using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Application.Services.Auth;
 using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities.Auth;
 using BasicECommerceApp.Persistance;
 using BasicECommerceApp.Persistance.Contexts;
+using BasicECommerceApp.Persistance.Repositories.Product;
+using BasicECommerceApp.Persistance.Services;
 using BasicECommerceApp.Persistance.Services.Auth;
 using BasicECommerceApp.Persistance.UnitOfWork;
+using BasicECommerceApp.Persistence.Repositories;
+using BasicECommerceApp.Persistence.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,12 +42,27 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddPersistanceServices();
+builder.Services.AddApplicationServices();
+
+builder.Services.AddAutoMapper(typeof(MapProfile));
+
+builder.Services.AddScoped<IProductReadRepository, ProductReadRepository>();
+builder.Services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
+
+builder.Services.AddScoped(typeof(IGenericReadRepository<>), typeof(GenericReadRepository<>));
+builder.Services.AddScoped(typeof(IGenericWriteRepository<>), typeof(GenericWriteRepository<>));
+builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 builder.Services.AddDbContext<BasicECommerceAppDbContext>(x =>
 {
@@ -75,9 +100,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 });
-
-builder.Services.AddPersistanceServices();
-builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
