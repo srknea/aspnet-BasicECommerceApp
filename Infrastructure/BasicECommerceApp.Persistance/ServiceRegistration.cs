@@ -1,10 +1,12 @@
 ﻿using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Category;
 using BasicECommerceApp.Application.Repositories.Product;
+using BasicECommerceApp.Application.Repositories.SubCategory;
 using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Persistance.Contexts;
 using BasicECommerceApp.Persistance.Repositories.Category;
 using BasicECommerceApp.Persistance.Repositories.Product;
+using BasicECommerceApp.Persistance.Repositories.SubCategory;
 using BasicECommerceApp.Persistance.Services;
 using BasicECommerceApp.Persistence.Repositories;
 using BasicECommerceApp.Persistence.Services;
@@ -34,6 +36,10 @@ namespace BasicECommerceApp.Persistance
             services.AddScoped<ICategoryReadRepository, CategoryReadRepository>();
             services.AddScoped<ICategoryWriteRepository, CategoryWriteRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddScoped<ISubCategoryReadRepository, SubCategoryReadRepository>();
+            services.AddScoped<ISubCategoryWriteRepository, SubCategoryWriteRepository>();
+            services.AddScoped<ISubCategoryService, SubCategoryService>();
         }
     }
 }
