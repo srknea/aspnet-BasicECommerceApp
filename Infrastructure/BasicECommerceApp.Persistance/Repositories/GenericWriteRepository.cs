@@ -7,7 +7,9 @@ namespace BasicECommerceApp.Persistence.Repositories
 {
     public class GenericWriteRepository<T> : IGenericWriteRepository<T> where T : class
     {
-        readonly private BasicECommerceAppDbContext _context;
+        /* protected erişim belirleyicisi ile tanımlanan değişkenler sadece tanımlandıkları 
+        sınıf içerisinde veya bu sınıftan türetilen sınıflar içerisinde erişilebilir. */
+        protected private BasicECommerceAppDbContext _context;
         private readonly DbSet<T> Table;
         public GenericWriteRepository(BasicECommerceAppDbContext context)
         {

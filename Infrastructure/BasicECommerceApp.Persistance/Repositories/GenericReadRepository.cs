@@ -8,14 +8,17 @@ namespace BasicECommerceApp.Persistence.Repositories
 {
     public class GenericReadRepository<T> : IGenericReadRepository<T> where T : class
     {
-        private readonly BasicECommerceAppDbContext _context;
+        /* protected erişim belirleyicisi ile tanımlanan değişkenler sadece tanımlandıkları 
+        sınıf içerisinde veya bu sınıftan türetilen sınıflar içerisinde erişilebilir. */
+        protected readonly BasicECommerceAppDbContext _context;
         private readonly DbSet<T> Table;
+
         public GenericReadRepository(BasicECommerceAppDbContext context)
         {
             _context = context;
             Table = context.Set<T>();
         }
-
+       
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {
             return await Table.AnyAsync(expression);

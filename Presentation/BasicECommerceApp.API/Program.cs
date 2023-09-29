@@ -47,15 +47,6 @@ builder.Services.AddApplicationServices();
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
-builder.Services.AddScoped<IProductReadRepository, ProductReadRepository>();
-builder.Services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
-
-builder.Services.AddScoped(typeof(IGenericReadRepository<>), typeof(GenericReadRepository<>));
-builder.Services.AddScoped(typeof(IGenericWriteRepository<>), typeof(GenericWriteRepository<>));
-builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-
-builder.Services.AddScoped<IProductService, ProductService>();
-
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
