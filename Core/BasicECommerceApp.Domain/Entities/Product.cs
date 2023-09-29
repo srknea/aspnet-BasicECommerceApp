@@ -6,6 +6,9 @@ namespace BasicECommerceApp.Domain.Entities
     {
         public string Name { get; set; }
         public int Stock { get; set; }
-        public float Price { get; set; }
+        public decimal Price { get; set; }
+
+        public Guid SubCategoryId { get; set; }
+        public SubCategory SubCategory { get; set; }
     }
 }

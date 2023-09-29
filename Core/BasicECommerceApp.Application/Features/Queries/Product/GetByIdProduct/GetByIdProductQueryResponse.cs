@@ -10,6 +10,6 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
     {
         public string Name { get; set; }
         public int Stock { get; set; }
-        public float Price { get; set; }
+        public decimal Price { get; set; }
     }
 }
