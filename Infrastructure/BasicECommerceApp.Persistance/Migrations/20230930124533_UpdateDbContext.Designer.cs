@@ -3,6 +3,7 @@ using System;
 using BasicECommerceApp.Persistance.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BasicECommerceApp.Persistance.Migrations
 {
     [DbContext(typeof(BasicECommerceAppDbContext))]
-    partial class BasicECommerceAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230930124533_UpdateDbContext")]
+    partial class UpdateDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,10 +144,6 @@ namespace BasicECommerceApp.Persistance.Migrations
 
                     b.Property<bool>("IsCheckedOut")
                         .HasColumnType("boolean");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
