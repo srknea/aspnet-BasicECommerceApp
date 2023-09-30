@@ -1,6 +1,7 @@
 ﻿using BasicECommerceApp.Application.DTOs;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
+using BasicECommerceApp.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections;
@@ -25,11 +26,12 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
         public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
             
-            var product = await _productService.AddAsync(new()
+            var product = await _productService.AddAsync(new Domain.Entities.Product()
             {
                 Name = request.Name,
                 Price = request.Price,
-                Stock = request.Stock
+                Stock = request.Stock,
+                SubCategoryId = request.SubCategoryId,
             });
             
             return new CreateProductCommandResponse() 
@@ -37,7 +39,8 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
                 Id = product.Id,
                 Name = product.Name,
                 Stock = product.Stock,
-                Price = product.Price
+                Price = product.Price,
+                SubCategoryId = product.SubCategoryId
             };
         }
     }
