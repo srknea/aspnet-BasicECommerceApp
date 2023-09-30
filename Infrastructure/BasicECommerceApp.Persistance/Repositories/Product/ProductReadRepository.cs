@@ -1,6 +1,8 @@
-﻿using BasicECommerceApp.Application.Repositories.Product;
+﻿using BasicECommerceApp.Application.Exceptions;
+using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Persistance.Contexts;
 using BasicECommerceApp.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,18 @@ namespace BasicECommerceApp.Persistance.Repositories.Product
     {
         public ProductReadRepository(BasicECommerceAppDbContext context) : base(context)
         {
+        }
+
+        public async Task<Domain.Entities.Product> GetByIdProductWithCategory(string id)
+        {
+            var product = await _context.Products.Include(x => x.SubCategory).ThenInclude(x => x.Category).FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                throw new ClientSideException($"{id}'ye sahip olan Product bulunmamaktadır.");
+            }
+
+            return product;
         }
     }
 }

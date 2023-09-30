@@ -7,7 +7,6 @@ using BasicECommerceApp.Domain.Entities.Auth;
 
 namespace BasicECommerceApp.Application.Mapping
 {
-    // Sadece AuthServer.Service katmanında kullanılacak
     public class MapProfile : Profile
     {
         public MapProfile()
@@ -18,6 +17,10 @@ namespace BasicECommerceApp.Application.Mapping
             CreateMap<Category, CategoryWithSubCategoryDto>().ReverseMap();
 
             CreateMap<Product, ProductDto>().ReverseMap();
+
+            CreateMap<Product, CategoryWithSubCategoryDto>().ReverseMap();
+
+            CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BasicECommerceApp.Application.Repositories;
+using BasicECommerceApp.Application.Repositories.Category;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Application.UnitOfWork;
@@ -16,8 +17,16 @@ namespace BasicECommerceApp.Persistence.Services
 {
     public class ProductService : GenericService<Product>, IProductService
     {
-        public ProductService(IGenericReadRepository<Product> readRepository, IGenericWriteRepository<Product> writeRepository, IUnitOfWork unitOfWork) : base(readRepository, writeRepository, unitOfWork)
+        private readonly IProductReadRepository _productReadRepository;
+
+        public ProductService(IGenericReadRepository<Product> readRepository, IGenericWriteRepository<Product> writeRepository, IUnitOfWork unitOfWork, IProductReadRepository productReadRepository) : base(readRepository, writeRepository, unitOfWork)
         {
+            _productReadRepository = productReadRepository;
+        }
+
+        public async Task<Product> GetByIdProductWithCategory(string id)
+        {
+            return await _productReadRepository.GetByIdProductWithCategory(id);
         }
     }
 }

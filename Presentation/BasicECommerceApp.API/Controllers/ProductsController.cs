@@ -36,6 +36,14 @@ namespace BasicECommerceApp.API.Controllers
             return CreateActionResult(CustomResponseDto<GetByIdProductQueryResponse>.Success(200, response));
         }
 
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetByIdProductWithCategory([FromRoute] GetByIdProductWithCategoryQueryRequest getByIdProductWithCategoryQueryRequest)
+        {
+            GetByIdProductWithCategoryQueryResponse response = await _mediator.Send(getByIdProductWithCategoryQueryRequest);
+
+            return CreateActionResult(CustomResponseDto<GetByIdProductWithCategoryQueryResponse>.Success(200, response));
+        }
+
         [HttpGet("{SubCategoryName}")]
         public async Task<IActionResult> GetProductsBySubCategoryNameWithCategories([FromRoute] GetByCategoryNameProductQueryRequest getByCategoryNameProductQueryRequest)
         {
