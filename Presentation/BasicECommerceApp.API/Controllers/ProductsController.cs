@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Application.DTOs;
+﻿using AutoMapper;
+using BasicECommerceApp.Application.DTOs;
 using BasicECommerceApp.Application.Exceptions;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
@@ -14,15 +15,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BasicECommerceApp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductsController : CustomBaseController
     {
-        readonly IMediator _mediator;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IMediator mediator)
+        public ProductsController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet("{Id}")]
@@ -31,6 +34,14 @@ namespace BasicECommerceApp.API.Controllers
             GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
 
             return CreateActionResult(CustomResponseDto<GetByIdProductQueryResponse>.Success(200, response));
+        }
+
+        [HttpGet("{SubCategoryName}")]
+        public async Task<IActionResult> GetProductsBySubCategoryNameWithCategories([FromRoute] GetByCategoryNameProductQueryRequest getByCategoryNameProductQueryRequest)
+        {
+            GetByCategoryNameProductQueryResponse response = await _mediator.Send(getByCategoryNameProductQueryRequest);
+
+            return CreateActionResult(CustomResponseDto<GetByCategoryNameProductQueryResponse>.Success(200, response));
         }
 
         [HttpPost]

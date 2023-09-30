@@ -21,7 +21,7 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
         {
             var categories = await _categoryService.GetAllCategoriesWithSubCategories();
 
-            var dto = _mapper.Map<List<CategoryDto>>(categories);
+            var dto = _mapper.Map<List<CategoryWithSubCategoryDto>>(categories);
 
             return new GetAllCategoryQueryResponse()
             {

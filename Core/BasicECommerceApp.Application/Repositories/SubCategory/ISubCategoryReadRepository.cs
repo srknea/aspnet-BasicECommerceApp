@@ -9,6 +9,6 @@ namespace BasicECommerceApp.Application.Repositories.SubCategory
 {
     public interface ISubCategoryReadRepository : IGenericReadRepository<Domain.Entities.SubCategory>
     {
-
+        Task<Domain.Entities.SubCategory> GetSubCategoryByNameWithCategoryAndProducts(string categoryName);
     }
 }

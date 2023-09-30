@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Domain.Entities;
+﻿using BasicECommerceApp.Application.DTOs;
+using BasicECommerceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

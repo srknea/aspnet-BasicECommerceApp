@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 {
-    public class GetAllCategoryQueryResponse
+    public class GetByCategoryNameProductQueryResponse
     {
-        public List<CategoryWithSubCategoryDto> Categories { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+
+        //public Guid CategoryId { get; set; }
+
+        public CategoryDto Category { get; set; }
+
+        public List<ProductDto> Products { get; set; }
     }
 }
