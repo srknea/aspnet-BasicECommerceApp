@@ -9,6 +9,7 @@ namespace BasicECommerceApp.Domain.Entities.Auth
 {
     public class AppUser : IdentityUser
     {
+        public List<Cart> Carts { get; set; }
 
     }
 }

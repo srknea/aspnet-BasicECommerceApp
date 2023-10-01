@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Domain.Entities.Common;
+﻿using BasicECommerceApp.Domain.Entities.Auth;
+using BasicECommerceApp.Domain.Entities.Common;
 
 namespace BasicECommerceApp.Domain.Entities
 {
@@ -9,5 +10,6 @@ namespace BasicECommerceApp.Domain.Entities
         public List<CartItem> CartItems { get; set; } // Sepetteki ürünler
 
         public string UserId { get; set; }
+        public AppUser User { get; set; }
     }
 }
