@@ -43,5 +43,13 @@ namespace BasicECommerceApp.API.Controllers
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
             // 204 : İşlem sonucunda bir data dönmediğimiz, sadece durumun başarılı olduğunu client'a söylemek istediğimiz senaryolarda kullanırız.
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryCommandRequest updateCategoryCommandRequest)
+        {
+            await _mediator.Send(updateCategoryCommandRequest);
+
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+        }
     }
 }
