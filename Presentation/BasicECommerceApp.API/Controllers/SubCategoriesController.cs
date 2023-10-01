@@ -1,5 +1,7 @@
 ﻿using BasicECommerceApp.Application.DTOs;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
+using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
+using BasicECommerceApp.Application.Features.Queries.Product.GetAllSubCategory;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +43,14 @@ namespace BasicECommerceApp.API.Controllers
             await _mediator.Send(updateSubCategoryCommandRequest);
 
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            GetAllSubCategoryQueryResponse response = await _mediator.Send(new GetAllSubCategoryQueryRequest());
+
+            return CreateActionResult(CustomResponseDto<GetAllSubCategoryQueryResponse>.Success(200, response));
         }
     }
 }

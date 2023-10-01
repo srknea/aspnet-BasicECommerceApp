@@ -3,6 +3,7 @@ using BasicECommerceApp.Application.DTOs;
 using BasicECommerceApp.Application.Exceptions;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
+using BasicECommerceApp.Application.Features.Queries.Product.GetAllSubCategory;
 using BasicECommerceApp.Application.Repositories;
 using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
@@ -77,6 +78,14 @@ namespace BasicECommerceApp.API.Controllers
             await _mediator.Send(updateProductCommandRequest);
 
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> All()
+        {
+            GetAllProductQueryResponse response = await _mediator.Send(new GetAllProductQueryRequest());
+
+            return CreateActionResult(CustomResponseDto<GetAllProductQueryResponse>.Success(200, response));
         }
     }
 }
