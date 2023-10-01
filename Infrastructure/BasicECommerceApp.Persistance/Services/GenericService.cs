@@ -3,6 +3,7 @@ using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Application.UnitOfWork;
 using BasicECommerceApp.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 
 namespace BasicECommerceApp.Persistance.Services

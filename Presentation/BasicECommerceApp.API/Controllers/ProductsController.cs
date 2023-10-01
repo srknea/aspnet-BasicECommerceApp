@@ -60,5 +60,14 @@ namespace BasicECommerceApp.API.Controllers
             return CreateActionResult(CustomResponseDto<CreateProductCommandResponse>.Success(201, response));
             // 201 : Oluşturuldu anlamında kullanılır. İşlem başarılı ise 201 döndürülebilir.
         }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Remove([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
+        {
+            await _mediator.Send(removeProductCommandRequest);
+
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+            // 204 : İşlem sonucunda bir data dönmediğimiz, sadece durumun başarılı olduğunu client'a söylemek istediğimiz senaryolarda kullanırız.
+        }
     }
 }
