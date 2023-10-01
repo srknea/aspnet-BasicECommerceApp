@@ -12,7 +12,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
         public CreateSubCategoryCommandValidator()
         {
             RuleFor(x => x.Name).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("{PropertyName} is required");
-            RuleFor(x => x.CategoryId).NotEmpty().WithMessage("CategoryId cannot be empty");
+            RuleFor(x => x.CategoryId).NotEmpty().WithMessage("{PropertyName} cannot be empty");
         }
     }
 }

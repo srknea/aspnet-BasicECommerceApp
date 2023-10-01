@@ -8,6 +8,7 @@ using BasicECommerceApp.Application.Repositories.Product;
 using BasicECommerceApp.Application.Services;
 using BasicECommerceApp.Domain.Entities;
 using BasicECommerceApp.Persistance.Repositories.Product;
+using BasicECommerceApp.Persistence.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +69,14 @@ namespace BasicECommerceApp.API.Controllers
 
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
             // 204 : İşlem sonucunda bir data dönmediğimiz, sadece durumun başarılı olduğunu client'a söylemek istediğimiz senaryolarda kullanırız.
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
+        {
+            await _mediator.Send(updateProductCommandRequest);
+
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
     }
 }
