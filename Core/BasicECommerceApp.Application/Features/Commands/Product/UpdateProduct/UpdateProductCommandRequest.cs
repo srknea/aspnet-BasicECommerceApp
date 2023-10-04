@@ -14,6 +14,6 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
         public int Stock { get; set; }
         public decimal Price { get; set; }
 
-        public string SubCategoryId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

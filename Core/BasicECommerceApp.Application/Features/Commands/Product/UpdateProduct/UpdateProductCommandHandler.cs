@@ -32,7 +32,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.RemoveProduct
                 Name = request.Name,
                 Price = request.Price,
                 Stock = request.Stock,
-                //SubCategoryId = Guid.Parse(request.SubCategoryId),
+                CategoryId = request.CategoryId,
             });
 
             return new UpdateProductCommandResponse();
