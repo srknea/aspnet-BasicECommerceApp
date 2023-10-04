@@ -26,12 +26,15 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.RemoveCategory
 
         public async Task<RemoveCategoryCommandResponse> Handle(RemoveCategoryCommandRequest request, CancellationToken cancellationToken)
         {
+            /*
 
             var category = await _categoryService.GetByIdAsync(request.Id);
 
             await _categoryService.RemoveAsync(category);
 
             return new RemoveCategoryCommandResponse(); 
+            */
+            return new();
         }
     }
 }

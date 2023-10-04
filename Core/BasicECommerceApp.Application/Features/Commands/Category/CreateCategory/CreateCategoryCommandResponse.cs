@@ -8,7 +8,9 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 {
     public class CreateCategoryCommandResponse
     {
+        /*
         public Guid Id { get; set; }
         public string Name { get; set; }
+        */
     }
 }

@@ -24,9 +24,11 @@ namespace BasicECommerceApp.Persistence.Services
             _productReadRepository = productReadRepository;
         }
 
+        /*
         public async Task<Product> GetByIdProductWithCategory(string id)
         {
             return await _productReadRepository.GetByIdProductWithCategory(id);
         }
+        */
     }
 }

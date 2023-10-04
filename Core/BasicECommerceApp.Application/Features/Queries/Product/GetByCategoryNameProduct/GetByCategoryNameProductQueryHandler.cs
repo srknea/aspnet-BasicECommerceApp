@@ -8,6 +8,7 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetByCategoryNameProductQueryHandler : IRequestHandler<GetByCategoryNameProductQueryRequest, GetByCategoryNameProductQueryResponse>
     {
+        /*
         readonly ISubCategoryService _subCategoryService;
         readonly IMapper _mapper;
 
@@ -16,23 +17,25 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
             _subCategoryService = subCategoryService;
             _mapper = mapper;
         }
+        */
 
         public async Task<GetByCategoryNameProductQueryResponse> Handle(GetByCategoryNameProductQueryRequest request, CancellationToken cancellationToken)
         {
-            
-            var productsWithCategories = await _subCategoryService.GetProductsBySubCategoryNameWithCategories(request.SubCategoryName);
+            /*  
+              var productsWithCategories = await _subCategoryService.GetProductsBySubCategoryNameWithCategories(request.SubCategoryName);
 
-            
 
-            return new GetByCategoryNameProductQueryResponse()
-            {
-                Id = productsWithCategories.Id,
-                Name = productsWithCategories.Name,
-                //CategoryId = productsWithCategories.CategoryId,
-                Category = _mapper.Map<CategoryDto>(productsWithCategories.Category),
-                Products = _mapper.Map<List<ProductDto>>(productsWithCategories.Products)
-            };
-            
+
+              return new GetByCategoryNameProductQueryResponse()
+              {
+                  Id = productsWithCategories.Id,
+                  Name = productsWithCategories.Name,
+                  //CategoryId = productsWithCategories.CategoryId,
+                  Category = _mapper.Map<CategoryDto>(productsWithCategories.Category),
+                  Products = _mapper.Map<List<ProductDto>>(productsWithCategories.Products)
+              };
+             */
+            return new();
         }
     }
 }

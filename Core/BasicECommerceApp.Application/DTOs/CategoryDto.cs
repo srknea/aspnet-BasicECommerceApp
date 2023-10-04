@@ -11,5 +11,7 @@ namespace BasicECommerceApp.Application.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public Guid? ParentId { get; set; }
+        public List<CategoryDto> Children { get; set; }
     }
 }

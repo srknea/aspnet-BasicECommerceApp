@@ -1,6 +1,9 @@
-﻿using BasicECommerceApp.Application.DTOs;
+﻿using AutoMapper;
+using BasicECommerceApp.Application.DTOs;
 using BasicECommerceApp.Application.Features.Commands.Product.CreateProduct;
 using BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct;
+using BasicECommerceApp.Application.Services;
+using BasicECommerceApp.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +16,16 @@ namespace BasicECommerceApp.API.Controllers
     {
         readonly IMediator _mediator;
 
-        public CategoriesController(IMediator mediator)
+        private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
+
+        public CategoriesController(IMediator mediator, ICategoryService categoryService, IMapper mapper)
         {
             _mediator = mediator;
+            _categoryService = categoryService;
+            _mapper = mapper;
         }
-
+        /*
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -50,6 +58,17 @@ namespace BasicECommerceApp.API.Controllers
             await _mediator.Send(updateCategoryCommandRequest);
 
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+        }
+        */
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategoriesWithSubCategories()
+        {
+            var categories = await _categoryService.GetAllCategoriesWithSubCategories();
+
+            var dto = _mapper.Map<List<CategoryDto>>(categories);
+
+            return Ok(dto);
         }
     }
 }

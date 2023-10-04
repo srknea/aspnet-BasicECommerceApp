@@ -19,6 +19,7 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
         {
+            /*
             var categories = await _categoryService.GetAllCategoriesWithSubCategories();
 
             var dto = _mapper.Map<List<CategoryWithSubCategoryDto>>(categories);
@@ -27,6 +28,8 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
             {
                 Categories = dto
             };
+            */
+            return new();
         }
     }
 }

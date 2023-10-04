@@ -10,6 +10,6 @@ namespace BasicECommerceApp.Application.Repositories.Product
 {
     public interface IProductReadRepository : IGenericReadRepository<Domain.Entities.Product>
     {
-        Task<Domain.Entities.Product> GetByIdProductWithCategory(string id);
+        //Task<Domain.Entities.Product> GetByIdProductWithCategory(string id);
     }
 }

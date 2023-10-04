@@ -26,11 +26,15 @@ namespace BasicECommerceApp.Persistence.Services
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;
         }
-
+        
+        
         public async Task<List<Category>> GetAllCategoriesWithSubCategories()
         {
             var categories = await _categoryReadRepository.GetAllCategoriesWithSubCategories();
             
+            return categories;
+
+            /*
             //kategorileri Name'lerine göre alfabetik olarak sırala
             var sortedCategories = categories.OrderBy(x => x.Name).ToList();
 
@@ -41,6 +45,9 @@ namespace BasicECommerceApp.Persistence.Services
             }
 
             return sortedCategories;
+
+            */
         }
+        
     }
 }

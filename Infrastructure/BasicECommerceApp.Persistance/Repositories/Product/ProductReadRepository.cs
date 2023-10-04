@@ -16,9 +16,9 @@ namespace BasicECommerceApp.Persistance.Repositories.Product
         public ProductReadRepository(BasicECommerceAppDbContext context) : base(context)
         {
         }
-
+        /*
         public async Task<Domain.Entities.Product> GetByIdProductWithCategory(string id)
-        {
+        {            
             var product = await _context.Products.Include(x => x.SubCategory).ThenInclude(x => x.Category).FirstOrDefaultAsync();
 
             if (product == null)
@@ -28,5 +28,6 @@ namespace BasicECommerceApp.Persistance.Repositories.Product
 
             return product;
         }
+        */
     }
 }

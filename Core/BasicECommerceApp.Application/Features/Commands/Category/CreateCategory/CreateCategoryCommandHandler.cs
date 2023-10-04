@@ -15,6 +15,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 {
     public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
     {
+
         readonly ICategoryService _categoryService;
 
         public CreateCategoryCommandHandler(ICategoryService productService, ICategoryService categoryService)
@@ -24,6 +25,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 
         public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
+            /*
             var category = await _categoryService.AddAsync(new()
             {
                 Name = request.Name
@@ -34,6 +36,8 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
                 Id = category.Id,
                 Name = category.Name
             };
+            */
+            return new();
         }
     }
 }

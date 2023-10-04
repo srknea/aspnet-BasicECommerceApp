@@ -11,7 +11,9 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
     {
         public CreateCategoryCommandValidator()
         {
+            /*
             RuleFor(x => x.Name).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("{PropertyName} is required");
+            */
         }
     }
 }

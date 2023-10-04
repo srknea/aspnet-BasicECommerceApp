@@ -9,6 +9,8 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 {
     public class CreateCategoryCommandRequest : IRequest<CreateCategoryCommandResponse>
     {
+        /*
         public string Name { get; set; }
+        */
     }
 }

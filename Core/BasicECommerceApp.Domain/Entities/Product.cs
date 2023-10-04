@@ -8,7 +8,7 @@ namespace BasicECommerceApp.Domain.Entities
         public int Stock { get; set; }
         public decimal Price { get; set; }
 
-        public Guid SubCategoryId { get; set; }
-        public SubCategory SubCategory { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

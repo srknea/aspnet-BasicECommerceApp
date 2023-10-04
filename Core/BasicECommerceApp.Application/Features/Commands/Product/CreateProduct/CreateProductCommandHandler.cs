@@ -31,7 +31,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
                 Name = request.Name,
                 Price = request.Price,
                 Stock = request.Stock,
-                SubCategoryId = request.SubCategoryId,
+                //SubCategoryId = request.SubCategoryId,
             });
             
             return new CreateProductCommandResponse() 
@@ -40,7 +40,7 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
                 Name = product.Name,
                 Stock = product.Stock,
                 Price = product.Price,
-                SubCategoryId = product.SubCategoryId
+                //SubCategoryId = product.SubCategoryId
             };
         }
     }

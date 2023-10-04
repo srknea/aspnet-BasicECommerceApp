@@ -3,6 +3,7 @@ using System;
 using BasicECommerceApp.Persistance.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BasicECommerceApp.Persistance.Migrations
 {
     [DbContext(typeof(BasicECommerceAppDbContext))]
-    partial class BasicECommerceAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004085030_UpdateForCategory")]
+    partial class UpdateForCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,9 +206,6 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -218,8 +218,6 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -369,17 +367,6 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Product", b =>
-                {
-                    b.HasOne("BasicECommerceApp.Domain.Entities.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("BasicECommerceApp.Domain.Entities.Auth.AppRole", null)
@@ -444,8 +431,6 @@ namespace BasicECommerceApp.Persistance.Migrations
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Children");
-
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
