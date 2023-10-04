@@ -19,4 +19,4 @@
 
 # Database Diagram
 
-![DatabaseDiagram](https://www.serkanisik.com/wp-content/uploads/2023/10/Screenshot_19.png)
+![DatabaseDiagram](https://www.serkanisik.com/wp-content/uploads/2023/10/basic-ecommerce-app.png)
