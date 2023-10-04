@@ -8,34 +8,26 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetByCategoryNameProductQueryHandler : IRequestHandler<GetByCategoryNameProductQueryRequest, GetByCategoryNameProductQueryResponse>
     {
-        /*
-        readonly ISubCategoryService _subCategoryService;
+        
+        readonly ICategoryService _categoryService;
         readonly IMapper _mapper;
 
-        public GetByCategoryNameProductQueryHandler(ISubCategoryService subCategoryService, IMapper mapper)
+        public GetByCategoryNameProductQueryHandler(ICategoryService categoryService, IMapper mapper)
         {
-            _subCategoryService = subCategoryService;
+            _categoryService = categoryService;
             _mapper = mapper;
         }
-        */
 
         public async Task<GetByCategoryNameProductQueryResponse> Handle(GetByCategoryNameProductQueryRequest request, CancellationToken cancellationToken)
         {
-            /*  
-              var productsWithCategories = await _subCategoryService.GetProductsBySubCategoryNameWithCategories(request.SubCategoryName);
-
-
+              var productsWithCategories = await _categoryService.GetCategoryByNameWithProducts(request.SubCategoryName);
 
               return new GetByCategoryNameProductQueryResponse()
               {
                   Id = productsWithCategories.Id,
                   Name = productsWithCategories.Name,
-                  //CategoryId = productsWithCategories.CategoryId,
-                  Category = _mapper.Map<CategoryDto>(productsWithCategories.Category),
                   Products = _mapper.Map<List<ProductDto>>(productsWithCategories.Products)
               };
-             */
-            return new();
         }
     }
 }

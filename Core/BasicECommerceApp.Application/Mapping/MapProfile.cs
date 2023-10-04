@@ -14,6 +14,7 @@ namespace BasicECommerceApp.Application.Mapping
             CreateMap<AppUserDto, AppUser>().ReverseMap();
 
             CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category, CategoryWithChildrenDto>().ReverseMap();
             CreateMap<Category, CategoryWithSubCategoryDto>().ReverseMap();
 
             CreateMap<Product, ProductDto>().ReverseMap();

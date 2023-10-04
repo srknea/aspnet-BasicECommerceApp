@@ -1,4 +1,5 @@
-﻿using BasicECommerceApp.Application.Repositories.Category;
+﻿using BasicECommerceApp.Application.Exceptions;
+using BasicECommerceApp.Application.Repositories.Category;
 using BasicECommerceApp.Persistance.Contexts;
 using BasicECommerceApp.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,19 @@ namespace BasicECommerceApp.Persistance.Repositories.Category
         {
             _context = context;
         }
-        
+
+        public async Task<Domain.Entities.Category> GetCategoryByNameWithProducts(string categoryName)
+        {
+            var subCategoryWithCategoryAndProducts = await _context.Categories.Include(x => x.Products).FirstOrDefaultAsync();
+
+            if (subCategoryWithCategoryAndProducts == null)
+            {
+                throw new ClientSideException($"{categoryName} adındaki alt kategori bulunamadı");
+            }
+
+            return subCategoryWithCategoryAndProducts;
+        }
+
         public async Task<List<Domain.Entities.Category>> GetAllCategoriesWithSubCategories()
         {
             var allCategoriesWithChildren = await GetAllCategoriesWithChildren();

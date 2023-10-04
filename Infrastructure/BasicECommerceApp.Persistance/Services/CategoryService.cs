@@ -26,8 +26,14 @@ namespace BasicECommerceApp.Persistence.Services
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;
         }
-        
-        
+
+        public async Task<Category> GetCategoryByNameWithProducts(string categoryName)
+        {
+            var categories = await _categoryReadRepository.GetCategoryByNameWithProducts(categoryName);
+
+            return categories;
+        }
+
         public async Task<List<Category>> GetAllCategoriesWithSubCategories()
         {
             var categories = await _categoryReadRepository.GetAllCategoriesWithSubCategories();

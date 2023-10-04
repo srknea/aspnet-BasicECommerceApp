@@ -12,11 +12,6 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-
-        //public Guid CategoryId { get; set; }
-
-        public CategoryDto Category { get; set; }
-
         public List<ProductDto> Products { get; set; }
     }
 }

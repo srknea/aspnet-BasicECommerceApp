@@ -19,11 +19,10 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetByIdProductWithCategoryQueryResponse> Handle(GetByIdProductWithCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-            /*
+            
             var product = await _productService.GetByIdProductWithCategory(request.Id);
 
-            var dto = _mapper.Map<SubCategoryDto>(product.SubCategory);
-            //var dto = _mapper.Map<CategoryDto>(product.SubCategory.Category);
+            var dto = _mapper.Map<CategoryDto>(product.Category); //
 
             return new GetByIdProductWithCategoryQueryResponse
             {
@@ -31,14 +30,8 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
                 Name = product.Name,
                 Stock = product.Stock,
                 Price = product.Price,
-                SubCategory = _mapper.Map<SubCategoryDto>(product.SubCategory),
-                Category = _mapper.Map<CategoryDto>(product.SubCategory.Category)
+                Category = _mapper.Map<CategoryDto>(product.Category) //
             };
-            */
-            return new GetByIdProductWithCategoryQueryResponse();
         }
     }
 }
-
-//Category = _mapper.Map<CategoryDto>(productsWithCategories.Category),
-//Products = _mapper.Map<List<ProductDto>>(productsWithCategories.Products)

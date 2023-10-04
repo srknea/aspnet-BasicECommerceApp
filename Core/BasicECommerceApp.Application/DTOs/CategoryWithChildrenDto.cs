@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace BasicECommerceApp.Application.DTOs
 {
-    public class CategoryDto
+    public class CategoryWithChildrenDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid? ParentId { get; set; }
+        public List<CategoryWithChildrenDto> Children { get; set; }
     }
 }
