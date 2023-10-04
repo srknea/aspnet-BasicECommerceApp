@@ -31,22 +31,8 @@ namespace BasicECommerceApp.Persistence.Services
         public async Task<List<Category>> GetAllCategoriesWithSubCategories()
         {
             var categories = await _categoryReadRepository.GetAllCategoriesWithSubCategories();
-            
+
             return categories;
-
-            /*
-            //kategorileri Name'lerine göre alfabetik olarak sırala
-            var sortedCategories = categories.OrderBy(x => x.Name).ToList();
-
-            //kategorilerin alt kategorilerini Name'lerine göre alfabetik olarak sırala
-            foreach (var category in sortedCategories)
-            {
-                category.SubCategories = category.SubCategories.OrderBy(x => x.Name).ToList();
-            }
-
-            return sortedCategories;
-
-            */
         }
         
     }

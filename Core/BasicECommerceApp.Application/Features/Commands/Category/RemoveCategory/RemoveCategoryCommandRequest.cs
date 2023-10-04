@@ -9,8 +9,6 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 {
     public class RemoveCategoryCommandRequest : IRequest<RemoveCategoryCommandResponse>
     {
-        /*
         public string Id { get; set; }
-        */
     }
 }

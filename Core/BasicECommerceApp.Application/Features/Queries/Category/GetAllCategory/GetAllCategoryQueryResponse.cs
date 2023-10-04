@@ -10,6 +10,6 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetAllCategoryQueryResponse
     {
-        public List<CategoryWithSubCategoryDto> Categories { get; set; }
+        public List<CategoryDto> Categories { get; set; }
     }
 }

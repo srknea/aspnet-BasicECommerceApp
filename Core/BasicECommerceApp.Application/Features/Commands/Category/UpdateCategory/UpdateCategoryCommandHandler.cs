@@ -26,19 +26,14 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.RemoveProduct
 
         public async Task<UpdateCategoryCommandResponse> Handle(UpdateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            /*
-
             await _categoryService.UpdateAsync(new Domain.Entities.Category()
             {
                 Id = Guid.Parse(request.Id),
                 Name = request.Name,
+                ParentId = Guid.Parse(request.Id),
             });
 
             return new UpdateCategoryCommandResponse();
-
-            */
-
-            return new();
         }
     }
 }

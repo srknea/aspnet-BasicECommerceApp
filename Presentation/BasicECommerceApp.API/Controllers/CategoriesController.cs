@@ -25,7 +25,7 @@ namespace BasicECommerceApp.API.Controllers
             _categoryService = categoryService;
             _mapper = mapper;
         }
-        /*
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -34,6 +34,7 @@ namespace BasicECommerceApp.API.Controllers
             return CreateActionResult(CustomResponseDto<GetAllCategoryQueryResponse>.Success(200, response));
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Save([FromBody] CreateCategoryCommandRequest createCategoryCommandRequest)
         {
@@ -43,6 +44,7 @@ namespace BasicECommerceApp.API.Controllers
             // 201 : Oluşturuldu anlamında kullanılır. İşlem başarılı ise 201 döndürülebilir.
         }
 
+        // TODO: Bir kategorinin alt kategorisi varsa silme işlemi yapılamıyor. Bu sorun çözülmeli.
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Remove([FromRoute] RemoveCategoryCommandRequest removeCategoryCommandRequest)
         {
@@ -58,17 +60,6 @@ namespace BasicECommerceApp.API.Controllers
             await _mediator.Send(updateCategoryCommandRequest);
 
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
-        }
-        */
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllCategoriesWithSubCategories()
-        {
-            var categories = await _categoryService.GetAllCategoriesWithSubCategories();
-
-            var dto = _mapper.Map<List<CategoryDto>>(categories);
-
-            return Ok(dto);
         }
     }
 }

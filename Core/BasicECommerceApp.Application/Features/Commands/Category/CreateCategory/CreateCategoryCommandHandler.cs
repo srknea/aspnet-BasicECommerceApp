@@ -25,19 +25,18 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.CreateProduct
 
         public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            /*
             var category = await _categoryService.AddAsync(new()
             {
-                Name = request.Name
+                Name = request.Name,
+                ParentId = request.ParentId
             });
 
             return new CreateCategoryCommandResponse()
             {
                 Id = category.Id,
-                Name = category.Name
+                Name = category.Name,
+                ParentId = category.ParentId
             };
-            */
-            return new();
         }
     }
 }

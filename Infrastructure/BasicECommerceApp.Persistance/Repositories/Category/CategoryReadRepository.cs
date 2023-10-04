@@ -31,6 +31,7 @@ namespace BasicECommerceApp.Persistance.Repositories.Category
             var rootCategories = await _context.Categories
                 .Include(c => c.Children)
                 .Where(c => c.ParentId == null)
+                .OrderBy(c => c.Name) //alfabetik olarak sırala
                 .ToListAsync();
 
             // Kök kategorilerin alt kategorilerini recursive (tekrarlanan) bir şekilde çekme
@@ -47,6 +48,7 @@ namespace BasicECommerceApp.Persistance.Repositories.Category
             var children = await _context.Categories
                 .Include(c => c.Children)
                 .Where(c => c.ParentId == parentId)
+                .OrderBy(c => c.Name) //alfabetik olarak sırala
                 .ToListAsync();
 
             foreach (var child in children)
