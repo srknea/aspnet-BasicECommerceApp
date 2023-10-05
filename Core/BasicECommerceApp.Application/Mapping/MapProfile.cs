@@ -20,6 +20,8 @@ namespace BasicECommerceApp.Application.Mapping
             CreateMap<Product, ProductDto>().ReverseMap();
 
             CreateMap<Product, CategoryWithSubCategoryDto>().ReverseMap();
+
+            CreateMap<CartItem, CartItemDto>().ReverseMap();
         }
     }
 }

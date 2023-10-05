@@ -143,12 +143,16 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid?>("VisitorId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VisitorId");
 
                     b.ToTable("Carts");
                 });
@@ -222,6 +226,17 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Visitors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -334,11 +349,15 @@ namespace BasicECommerceApp.Persistance.Migrations
                 {
                     b.HasOne("BasicECommerceApp.Domain.Entities.Auth.AppUser", "User")
                         .WithMany("Carts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Visitor", "Visitor")
+                        .WithMany("Carts")
+                        .HasForeignKey("VisitorId");
 
                     b.Navigation("User");
+
+                    b.Navigation("Visitor");
                 });
 
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.CartItem", b =>
@@ -446,6 +465,11 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.Navigation("Children");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
+                {
+                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

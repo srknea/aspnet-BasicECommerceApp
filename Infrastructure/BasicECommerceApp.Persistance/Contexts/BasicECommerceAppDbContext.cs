@@ -22,6 +22,8 @@ namespace BasicECommerceApp.Persistance.Contexts
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
+        public DbSet<Visitor> Visitors { get; set; }
+
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

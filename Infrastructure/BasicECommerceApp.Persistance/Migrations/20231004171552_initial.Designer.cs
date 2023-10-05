@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BasicECommerceApp.Persistance.Migrations
 {
     [DbContext(typeof(BasicECommerceAppDbContext))]
-    [Migration("20230930134145_UpdateCart")]
-    partial class UpdateCart
+    [Migration("20231004171552_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,7 +149,14 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("VisitorId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VisitorId");
 
                     b.ToTable("Carts");
                 });
@@ -188,7 +195,12 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
                 });
@@ -197,6 +209,9 @@ namespace BasicECommerceApp.Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -210,34 +225,22 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SubCategoryId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SubCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategories");
+                    b.ToTable("Visitors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -346,6 +349,25 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Cart", b =>
+                {
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Auth.AppUser", "User")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Visitor", "Visitor")
+                        .WithMany("Carts")
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("Visitor");
+                });
+
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.CartItem", b =>
                 {
                     b.HasOne("BasicECommerceApp.Domain.Entities.Cart", "Cart")
@@ -365,21 +387,19 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Product", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("BasicECommerceApp.Domain.Entities.SubCategory", "SubCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
 
-                    b.Navigation("SubCategory");
+                    b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Product", b =>
                 {
                     b.HasOne("BasicECommerceApp.Domain.Entities.Category", "Category")
-                        .WithMany("SubCategories")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -438,6 +458,11 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Auth.AppUser", b =>
+                {
+                    b.Navigation("Carts");
+                });
+
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -445,12 +470,14 @@ namespace BasicECommerceApp.Persistance.Migrations
 
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
                 {
-                    b.Navigation("SubCategories");
+                    b.Navigation("Children");
+
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BasicECommerceApp.Persistance.Migrations
 {
     [DbContext(typeof(BasicECommerceAppDbContext))]
-    [Migration("20230930124336_CartAndCardItem")]
-    partial class CartAndCardItem
+    [Migration("20231005053700_Nullable")]
+    partial class Nullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,57 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.ToTable("UserRefreshTokens");
                 });
 
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsCheckedOut")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("VisitorId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VisitorId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.CartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -143,7 +194,12 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
                 });
@@ -152,6 +208,9 @@ namespace BasicECommerceApp.Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
@@ -165,34 +224,22 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("SubCategoryId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SubCategoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategories");
+                    b.ToTable("Visitors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -301,21 +348,53 @@ namespace BasicECommerceApp.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Product", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("BasicECommerceApp.Domain.Entities.SubCategory", "SubCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("SubCategoryId")
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Auth.AppUser", "User")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Visitor", "Visitor")
+                        .WithMany("Carts")
+                        .HasForeignKey("VisitorId");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Visitor");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.CartItem", b =>
+                {
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SubCategory");
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
+                {
+                    b.HasOne("BasicECommerceApp.Domain.Entities.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Product", b =>
                 {
                     b.HasOne("BasicECommerceApp.Domain.Entities.Category", "Category")
-                        .WithMany("SubCategories")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -374,14 +453,26 @@ namespace BasicECommerceApp.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Auth.AppUser", b =>
                 {
-                    b.Navigation("SubCategories");
+                    b.Navigation("Carts");
                 });
 
-            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.SubCategory", b =>
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Cart", b =>
                 {
+                    b.Navigation("CartItems");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Children");
+
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("BasicECommerceApp.Domain.Entities.Visitor", b =>
+                {
+                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }

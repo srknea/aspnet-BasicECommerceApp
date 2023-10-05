@@ -9,7 +9,11 @@ namespace BasicECommerceApp.Domain.Entities
         public bool IsCheckedOut { get; set; } // Sepet siparişe dönüştü mü?
         public List<CartItem> CartItems { get; set; } // Sepetteki ürünler
 
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public AppUser User { get; set; }
+
+        public Guid? VisitorId { get; set; }
+        public Visitor Visitor { get; set; }
+
     }
 }

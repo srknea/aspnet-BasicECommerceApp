@@ -56,11 +56,17 @@ namespace BasicECommerceApp.Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,6 +80,17 @@ namespace BasicECommerceApp.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRefreshTokens", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Visitors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visitors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,25 +200,6 @@ namespace BasicECommerceApp.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SubCategories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubCategories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SubCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -209,15 +207,68 @@ namespace BasicECommerceApp.Persistance.Migrations
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Stock = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    SubCategoryId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_SubCategories_SubCategoryId",
-                        column: x => x.SubCategoryId,
-                        principalTable: "SubCategories",
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    IsCheckedOut = table.Column<bool>(type: "boolean", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    VisitorId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Carts_Visitors_VisitorId",
+                        column: x => x.VisitorId,
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    CartId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,13 +311,33 @@ namespace BasicECommerceApp.Persistance.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SubCategoryId",
-                table: "Products",
-                column: "SubCategoryId");
+                name: "IX_CartItems_CartId",
+                table: "CartItems",
+                column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubCategories_CategoryId",
-                table: "SubCategories",
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_UserId",
+                table: "Carts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_VisitorId",
+                table: "Carts",
+                column: "VisitorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_ParentId",
+                table: "Categories",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
                 column: "CategoryId");
         }
 
@@ -289,7 +360,7 @@ namespace BasicECommerceApp.Persistance.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CartItems");
 
             migrationBuilder.DropTable(
                 name: "UserRefreshTokens");
@@ -298,10 +369,16 @@ namespace BasicECommerceApp.Persistance.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "SubCategories");
+                name: "Visitors");
 
             migrationBuilder.DropTable(
                 name: "Categories");

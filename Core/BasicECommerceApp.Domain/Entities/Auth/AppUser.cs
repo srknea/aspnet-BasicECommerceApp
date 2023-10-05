@@ -11,5 +11,15 @@ namespace BasicECommerceApp.Domain.Entities.Auth
     {
         public List<Cart> Carts { get; set; }
 
+        public bool HasActiveCart()
+        {
+            // Kullanıcının aktif bir sepeti var mı kontrolünü yapın
+            return Carts != null && Carts.Any(cart => cart.IsActive);
+        }
+        public Cart GetActiveCart()
+        {
+            // Kullanıcının aktif bir sepeti varsa onu döndürün
+            return Carts.FirstOrDefault(cart => cart.IsActive);
+        }
     }
 }
