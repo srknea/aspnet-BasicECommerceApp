@@ -12,10 +12,8 @@ namespace BasicECommerceApp.Application.Features.Commands.Product.UpdateProduct
     {
         public UpdateCategoryCommandValidator()
         {
-            /*
             RuleFor(x => x.Id).NotEmpty().WithMessage("{PropertyName} cannot be empty");
             RuleFor(x => x.Name).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("{PropertyName} is required");
-            */
         }
     }
 }
