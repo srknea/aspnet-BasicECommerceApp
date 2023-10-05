@@ -9,6 +9,6 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetByCategoryNameProductQueryRequest : IRequest<GetByCategoryNameProductQueryResponse>
     {
-        public string SubCategoryName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

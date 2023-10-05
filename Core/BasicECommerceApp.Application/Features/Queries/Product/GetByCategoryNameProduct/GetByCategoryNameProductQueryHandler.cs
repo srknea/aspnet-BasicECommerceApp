@@ -20,7 +20,7 @@ namespace BasicECommerceApp.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetByCategoryNameProductQueryResponse> Handle(GetByCategoryNameProductQueryRequest request, CancellationToken cancellationToken)
         {
-              var productsWithCategories = await _categoryService.GetCategoryByNameWithProducts(request.SubCategoryName);
+              var productsWithCategories = await _categoryService.GetCategoryByNameWithProducts(request.CategoryName);
 
               return new GetByCategoryNameProductQueryResponse()
               {

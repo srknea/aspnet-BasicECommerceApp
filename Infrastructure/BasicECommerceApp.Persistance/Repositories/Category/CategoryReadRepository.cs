@@ -21,14 +21,14 @@ namespace BasicECommerceApp.Persistance.Repositories.Category
 
         public async Task<Domain.Entities.Category> GetCategoryByNameWithProducts(string categoryName)
         {
-            var subCategoryWithCategoryAndProducts = await _context.Categories.Include(x => x.Products).FirstOrDefaultAsync();
+            var categoryWithProducts = await _context.Categories.Include(x => x.Products).FirstOrDefaultAsync(x => x.Name == categoryName);
 
-            if (subCategoryWithCategoryAndProducts == null)
+            if (categoryWithProducts == null)
             {
                 throw new ClientSideException($"{categoryName} adındaki alt kategori bulunamadı");
             }
 
-            return subCategoryWithCategoryAndProducts;
+            return categoryWithProducts;
         }
 
         public async Task<List<Domain.Entities.Category>> GetAllCategoriesWithSubCategories()

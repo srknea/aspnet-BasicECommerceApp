@@ -46,7 +46,7 @@ namespace BasicECommerceApp.API.Controllers
             return CreateActionResult(CustomResponseDto<GetByIdProductWithCategoryQueryResponse>.Success(200, response));
         }
 
-        [HttpGet("{SubCategoryName}")]
+        [HttpGet("{CategoryName}")]
         public async Task<IActionResult> GetProductsBySubCategoryNameWithCategories([FromRoute] GetByCategoryNameProductQueryRequest getByCategoryNameProductQueryRequest)
         {
             GetByCategoryNameProductQueryResponse response = await _mediator.Send(getByCategoryNameProductQueryRequest);

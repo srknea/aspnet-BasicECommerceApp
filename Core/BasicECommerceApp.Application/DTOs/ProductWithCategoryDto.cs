@@ -8,6 +8,6 @@ namespace BasicECommerceApp.Application.DTOs
 {
     public class ProductWithCategoryDto : ProductDto
     {
-        public SubCategoryWithCategoryDto CategoryDto { get; set; }
+        public CategoryWithChildrenDto CategoryDto { get; set; }
     }
 }
